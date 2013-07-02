@@ -1,0 +1,16 @@
+{
+  "project": [
+    { "title": "code" },
+    { 
+      "title" : "sass",
+      "directory" : "sass",
+      "primary" : true,
+      "onStartup" : [
+        "vim sass/app.scss",
+        ":vsp sass/_mixins.scss"
+      ]
+    },
+    { "title" : "compass", "exec" : "compass watch" },
+    { "title" : "rack", "exec" : "rackup config.ru" }
+  ]
+}

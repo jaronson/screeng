@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
+
+Bundler.setup(:default)
+
+require 'screeng'
+
+p = Trollop::Parser.new do
+  banner Screeng::Runner.banner
+  opt :screenrc, "The path to your .screenrc", :type => :string, :default => File.expand_path('~/.screenrc'), :short => '-c'
+  opt :screeng,  "The path to your .screeng directory", :type => :string, :default => File.expand_path('~/.screeng'), :short => '-s'
+  opt :group,    "The group to use", :short => '-g'
+  opt :print,    "Print the generated commands, don't run them", :short => '-p'
+  opt :dry,      "Do nothing", :short => '-n'
+end
+
+opts = Trollop.with_standard_exception_handling(p) do
+  p.parse ARGV
+end
+
+begin
+  Screeng::Runner.go(ARGV.shift, opts)
+rescue Trollop::HelpNeeded
+  p.educate
+end
